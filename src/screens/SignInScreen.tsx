@@ -11,7 +11,7 @@ const SignInScreen = () => {
 		document.title = "Sign Screen";
 	}, []);
 
-	const handleSubmit = async (event) => {
+	const handleSubmit = async (event: { preventDefault: () => void; }) => {
 		event.preventDefault();
 
 		if (email && password) {
