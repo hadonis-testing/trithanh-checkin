@@ -1,0 +1,25 @@
+.sign-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+}
+
+.sign-form {
+  width: 50%;
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.form-group-email,
+.form-group-password {
+  margin-bottom: 15px;
+}
+
+.submit-button {
+  width: 100%;
+  background-color: #007bff;
+  border-color: #007bff;
+}
