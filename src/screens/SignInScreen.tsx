@@ -1,24 +1,58 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Form, Button, Container } from "react-bootstrap";
+import axios from "axios";
 import "./SignInScreen.css"; // Import the CSS file
 
 const SignInScreen = () => {
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+
 	useEffect(() => {
 		document.title = "Sign Screen";
 	}, []);
 
+	const handleSubmit = async (event) => {
+		event.preventDefault();
+
+		if (email && password) {
+			const params = new URLSearchParams();
+			params.append("client_id", "ro.client");
+			params.append("client_secret", "secret");
+			params.append("username", email);
+			params.append("password", password);
+			params.append("grant_type", "password");
+			params.append("scope", "api.TTS");
+
+			const response = await axios.post(
+				"https://checkin.trithanhsoft.com/connect/token",
+				params,
+				{
+					headers: {
+						"Content-Type": "application/x-www-form-urlencoded"
+					},
+				}
+			);
+
+			console.log(response.data);
+
+			// handle response here
+		}
+	};
+
 	return (
 		<Container className="sign-screen">
-			<Form className="sign-form">
+			<Form onSubmit={handleSubmit} className="sign-form">
 				<Form.Group
 					className="mb-3 form-group-email"
 					controlId="formBasicEmail"
 				>
 					<Form.Label>Email address</Form.Label>
-					<Form.Control type="email" placeholder="Enter email" />
-					<Form.Text className="text-muted">
-						We'll never share your email with anyone else.
-					</Form.Text>
+					<Form.Control
+						type="email"
+						placeholder="Enter email"
+						value={email}
+						onChange={(e) => setEmail(e.target.value)}
+					/>
 				</Form.Group>
 
 				<Form.Group
@@ -26,7 +60,12 @@ const SignInScreen = () => {
 					controlId="formBasicPassword"
 				>
 					<Form.Label>Password</Form.Label>
-					<Form.Control type="password" placeholder="Password" />
+					<Form.Control
+						type="password"
+						placeholder="Password"
+						value={password}
+						onChange={(e) => setPassword(e.target.value)}
+					/>
 				</Form.Group>
 				<Button variant="primary" type="submit" className="submit-button">
 					Sign In
