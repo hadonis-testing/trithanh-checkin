@@ -1,12 +1,15 @@
-import { Suspense, lazy } from "react";
+import { Suspense, useState, lazy } from "react";
 
-const SignScreen = lazy(() => import("./screens/SignInScreen"));
+const SignInScreen = lazy(() => import("./screens/SignInScreen"));
+const CheckInScreen = lazy(() => import("./screens/CheckInScreen"));
 
 const App = () => {
+	const [token, setToken] = useState(null as string | null);
+
 	return (
 		<div className="App">
 			<Suspense fallback={<div>Loading...</div>}>
-				<SignScreen />
+				{token ? <CheckInScreen token={token} /> : <SignInScreen setToken={setToken} />}
 			</Suspense>
 		</div>
 	);

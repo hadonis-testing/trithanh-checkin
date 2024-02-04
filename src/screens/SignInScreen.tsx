@@ -3,7 +3,11 @@ import { Form, Button, Container } from "react-bootstrap";
 import axios from "axios";
 import "./SignInScreen.css"; // Import the CSS file
 
-const SignInScreen = () => {
+const SignInScreen = ({
+	setToken,
+}: {
+	setToken: React.Dispatch<React.SetStateAction<string | null>>;
+}) => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
@@ -11,7 +15,7 @@ const SignInScreen = () => {
 		document.title = "Sign Screen";
 	}, []);
 
-	const handleSubmit = async (event: { preventDefault: () => void; }) => {
+	const handleSubmit = async (event: { preventDefault: () => void }) => {
 		event.preventDefault();
 
 		if (email && password) {
@@ -28,14 +32,14 @@ const SignInScreen = () => {
 				params,
 				{
 					headers: {
-						"Content-Type": "application/x-www-form-urlencoded"
+						"Content-Type": "application/x-www-form-urlencoded",
 					},
 				}
 			);
 
-			console.log(response.data);
-
-			// handle response here
+			if (response.status == 200 && response.data && response.data.access_token) {
+				setToken(response.data.access_token);
+			}
 		}
 	};
 

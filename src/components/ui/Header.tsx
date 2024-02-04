@@ -22,7 +22,7 @@ const Header = () => {
 					<Col sm={3}>
 						<Navbar.Brand>
 							<img
-								src="/vite.svg"
+								src="./vite.svg"
 								height="30"
 								className="d-inline-block align-top"
 								alt="Logo"
