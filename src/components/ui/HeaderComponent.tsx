@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Container, Row, Col, Navbar, Nav, Button } from "react-bootstrap";
 
-const Header = () => {
+const HeaderComponent = () => {
 	const [isFullscreen, setIsFullscreen] = useState(false);
 
 	const toggleFullscreen = () => {
@@ -41,4 +41,4 @@ const Header = () => {
 	);
 };
 
-export default Header;
+export default HeaderComponent;

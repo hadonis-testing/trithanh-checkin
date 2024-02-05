@@ -1,5 +1,7 @@
 import { useEffect } from "react";
-import Header from "../components/ui/Header";
+import { Container, Row, Col } from "react-bootstrap";
+import HeaderComponent from "../components/ui/HeaderComponent";
+import CarouselComponent from "../components/ui/CarouselComponent";
 
 const CheckInScreen = ({ token }: { token: string | null }) => {
 	useEffect(() => {
@@ -7,10 +9,17 @@ const CheckInScreen = ({ token }: { token: string | null }) => {
 	}, []);
 
 	return (
-		<div>
-			<Header />
-			<h1>{token}</h1>
-		</div>
+		<Container fluid>
+			<HeaderComponent />
+			<Row>
+				<Col sm={7}>
+					<CarouselComponent />
+				</Col>
+				<Col sm={5}>
+					<h1>{token}</h1>
+				</Col>
+			</Row>
+		</Container>
 	);
 };
 
