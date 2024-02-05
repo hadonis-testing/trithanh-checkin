@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import { Suspense, useEffect, lazy } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import HeaderComponent from "../components/ui/HeaderComponent";
-import CarouselComponent from "../components/ui/CarouselComponent";
+const HeaderComponent = lazy(() => import('../components/ui/HeaderComponent'));
+const CarouselComponent = lazy(() => import('../components/ui/CarouselComponent'));
 
 const CheckInScreen = ({ token }: { token: string | null }) => {
 	useEffect(() => {
@@ -10,10 +10,14 @@ const CheckInScreen = ({ token }: { token: string | null }) => {
 
 	return (
 		<Container fluid>
-			<HeaderComponent />
+			<Suspense fallback={<div>Loading Header...</div>}>
+				<HeaderComponent />
+			</Suspense>
 			<Row>
 				<Col sm={7}>
-					<CarouselComponent />
+					<Suspense fallback={<div>Loading Carousel...</div>}>
+						<CarouselComponent />
+					</Suspense>
 				</Col>
 				<Col sm={5}>
 					<h1>{token}</h1>
