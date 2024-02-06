@@ -8,7 +8,7 @@ const ServiceComponent = ({
 	setComponent,
 	setServiceList,
 }: {
-	setComponent: React.Dispatch<React.SetStateAction<string | null>>;
+	setComponent: React.Dispatch<React.SetStateAction<string>>;
 	setServiceList: React.Dispatch<React.SetStateAction<string>>;
 }) => {
 	const [cards, setCards] = useState<Service[]>([]);
@@ -104,6 +104,7 @@ const ServiceComponent = ({
 						});
 
 						setServiceList(serviceListStr.trim().slice(0, -1));
+						setComponent("review");
 					}}
 				>
 					Next

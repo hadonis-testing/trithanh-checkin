@@ -12,14 +12,23 @@ const InfoComponent = lazy(() => import("../components/ui/InfoComponent"));
 const ServiceComponent = lazy(
 	() => import("../components/ui/ServiceComponent")
 );
+const ReviewComponent = lazy(() => import("../components/ui/ReviewComponent"));
 
-const CheckInScreen = ({ token }: { token: string | null }) => {
+const CheckInScreen = ({ token }: { token: string }) => {
 	useEffect(() => {
 		document.title = "Check In Screen";
 	}, []);
 
-	const [component, setComponent] = useState<string | null>("service");
-	const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+	const [component, setComponent] = useState<string>("telephone");
+	const [userInfo, setUserInfo] = useState<UserInfo>({
+		id: 0,
+		userId: 0,
+		fullName: "",
+		phoneNumber: "",
+		email: "",
+		birthday_month: 0,
+		birthday_day: 0,
+	});
 	const [serviceList, setServiceList] = useState("");
 
 	return (
@@ -42,12 +51,26 @@ const CheckInScreen = ({ token }: { token: string | null }) => {
 							/>
 						)}
 						{component == "info" && (
-							<InfoComponent setComponent={setComponent} setUserInfo={setUserInfo} userInfo={userInfo} />
+							<InfoComponent
+								setComponent={setComponent}
+								setUserInfo={setUserInfo}
+								userInfo={userInfo}
+							/>
 						)}
 						{component == "service" && (
-							<ServiceComponent setComponent={setComponent} setServiceList={setServiceList}/>
+							<ServiceComponent
+								setComponent={setComponent}
+								setServiceList={setServiceList}
+							/>
 						)}
-						<h6>{token}</h6>
+						{component == "review" && (
+							<ReviewComponent
+								setComponent={setComponent}
+								userInfo={userInfo}
+								serviceList={serviceList}
+								token={token}
+							/>
+						)}
 					</Suspense>
 				</Col>
 			</Row>

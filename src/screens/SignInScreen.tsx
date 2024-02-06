@@ -6,7 +6,7 @@ import "./SignInScreen.css"; // Import the CSS file
 const SignInScreen = ({
 	setToken,
 }: {
-	setToken: React.Dispatch<React.SetStateAction<string | null>>;
+	setToken: React.Dispatch<React.SetStateAction<string>>;
 }) => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");

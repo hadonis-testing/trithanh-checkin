@@ -7,9 +7,9 @@ const InfoComponent = ({
 	userInfo,
 	setUserInfo,
 }: {
-	setComponent: React.Dispatch<React.SetStateAction<string | null>>;
+	setComponent: React.Dispatch<React.SetStateAction<string>>;
 	userInfo: UserInfo | null;
-	setUserInfo: React.Dispatch<React.SetStateAction<UserInfo | null>>;
+	setUserInfo: React.Dispatch<React.SetStateAction<UserInfo>>;
 }) => {
 	const [name, setName] = useState(userInfo?.fullName || "");
 	const [email, setEmail] = useState(userInfo?.email || "");

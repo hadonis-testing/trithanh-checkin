@@ -15,8 +15,8 @@ const TelephoneComponent = ({
 	setComponent,
 	setUserInfo,
 }: {
-	setComponent: React.Dispatch<React.SetStateAction<string | null>>;
-	setUserInfo: React.Dispatch<React.SetStateAction<UserInfo | null>>;
+	setComponent: React.Dispatch<React.SetStateAction<string>>;
+	setUserInfo: React.Dispatch<React.SetStateAction<UserInfo>>;
 }) => {
 	const [input, setInput] = useState("");
 
