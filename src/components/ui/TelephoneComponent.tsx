@@ -8,6 +8,7 @@ import {
 	Col,
 } from "react-bootstrap";
 import "./TelephoneComponent.css";
+import axios from "axios";
 
 const TelephoneComponent = () => {
 	const [input, setInput] = useState("");
@@ -32,7 +33,7 @@ const TelephoneComponent = () => {
 		return input.replace(/\D/g, "");
 	};
 
-	const handleClick = (value: string) => {
+	const handleClick = async (value: string) => {
 		if (value == "Del") {
 			if (input.length == 6) {
 				setInput(input.slice(0, -3));
@@ -51,9 +52,20 @@ const TelephoneComponent = () => {
 		} else {
 			setInput(formatInput(input + value));
 
-			if (removeFormatting(input + value).length == 10) {
+			const phoneNumber = removeFormatting(input + value);
+
+			if (phoneNumber.length == 10) {
 				console.log("Telephone number is complete");
-        setInput("");
+				setInput("");
+
+				const response = await axios.get(
+					"https://checkin.trithanhsoft.com/mobile-sign-in/check?phoneNumber=" +
+						phoneNumber
+				);
+
+				if (response.status == 200 && response.data) {
+					console.log(response.data);
+				}
 			}
 		}
 	};
@@ -68,7 +80,8 @@ const TelephoneComponent = () => {
 	return (
 		<Container className="mt-5">
 			<InputGroup className="mb-3">
-				<FormControl className="text-center number-input"
+				<FormControl
+					className="text-center number-input"
 					placeholder="Telephone Number"
 					aria-label="Telephone Number"
 					aria-describedby="basic-addon2"
@@ -80,8 +93,12 @@ const TelephoneComponent = () => {
 				{buttons.map((row, rowIndex) => (
 					<Row key={rowIndex} className="mb-3">
 						{row.map((value) => (
-							<Col key={value} className="py-4 mr-4 d-flex justify-content-center align-items-center">
-								<Button className="number-btn"
+							<Col
+								key={value}
+								className="py-4 mr-4 d-flex justify-content-center align-items-center"
+							>
+								<Button
+									className="number-btn"
 									variant="outline-secondary"
 									onClick={() => handleClick(value)}
 								>
