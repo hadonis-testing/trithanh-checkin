@@ -9,7 +9,7 @@ const App = () => {
 	return (
 		<div className="App">
 			<Suspense fallback={<div>Loading...</div>}>
-				{!token ? <CheckInScreen token={token} /> : <SignInScreen setToken={setToken} />}
+				{token ? <CheckInScreen token={token} /> : <SignInScreen setToken={setToken} />}
 			</Suspense>
 		</div>
 	);
