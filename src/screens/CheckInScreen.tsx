@@ -9,14 +9,18 @@ const TelephoneComponent = lazy(
 	() => import("../components/ui/TelephoneComponent")
 );
 const InfoComponent = lazy(() => import("../components/ui/InfoComponent"));
+const ServiceComponent = lazy(
+	() => import("../components/ui/ServiceComponent")
+);
 
 const CheckInScreen = ({ token }: { token: string | null }) => {
 	useEffect(() => {
 		document.title = "Check In Screen";
 	}, []);
 
-	const [component, setComponent] = useState<string | null>("telephone");
+	const [component, setComponent] = useState<string | null>("service");
 	const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+	const [serviceList, setServiceList] = useState("");
 
 	return (
 		<Container fluid>
@@ -24,12 +28,12 @@ const CheckInScreen = ({ token }: { token: string | null }) => {
 				<HeaderComponent />
 			</Suspense>
 			<Row>
-				<Col sm={7}>
+				<Col sm={6}>
 					<Suspense fallback={<div>Loading Carousel...</div>}>
 						<CarouselComponent />
 					</Suspense>
 				</Col>
-				<Col sm={5}>
+				<Col sm={6}>
 					<Suspense fallback={<div>Loading Component...</div>}>
 						{component == "telephone" && (
 							<TelephoneComponent
@@ -38,7 +42,10 @@ const CheckInScreen = ({ token }: { token: string | null }) => {
 							/>
 						)}
 						{component == "info" && (
-							<InfoComponent setComponent={setComponent} userInfo={userInfo} />
+							<InfoComponent setComponent={setComponent} setUserInfo={setUserInfo} userInfo={userInfo} />
+						)}
+						{component == "service" && (
+							<ServiceComponent setComponent={setComponent} setServiceList={setServiceList}/>
 						)}
 						<h6>{token}</h6>
 					</Suspense>

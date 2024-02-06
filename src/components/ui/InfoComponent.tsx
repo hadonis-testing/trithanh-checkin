@@ -5,9 +5,11 @@ import UserInfo from "../data/UserInfo";
 const InfoComponent = ({
 	setComponent,
 	userInfo,
+	setUserInfo,
 }: {
 	setComponent: React.Dispatch<React.SetStateAction<string | null>>;
 	userInfo: UserInfo | null;
+	setUserInfo: React.Dispatch<React.SetStateAction<UserInfo | null>>;
 }) => {
 	const [name, setName] = useState(userInfo?.fullName || "");
 	const [email, setEmail] = useState(userInfo?.email || "");
@@ -85,7 +87,23 @@ const InfoComponent = ({
 					>
 						Back
 					</Button>
-					<Button variant="primary" className="mx-5 px-5 py-3" disabled={!name}>
+					<Button
+						variant="primary"
+						className="mx-5 px-5 py-3"
+						disabled={!name}
+						onClick={() => {
+							setUserInfo({
+								fullName: name,
+								email: email,
+								birthday_day: day,
+								birthday_month: month,
+								id: userInfo?.id || 0,
+								userId: userInfo?.userId || 0,
+								phoneNumber: userInfo?.phoneNumber || "",
+							});
+							setComponent("service");
+						}}
+					>
 						Next
 					</Button>
 				</div>
