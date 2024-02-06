@@ -9,8 +9,15 @@ import {
 } from "react-bootstrap";
 import "./TelephoneComponent.css";
 import axios from "axios";
+import UserInfo from "../data/UserInfo";
 
-const TelephoneComponent = () => {
+const TelephoneComponent = ({
+	setComponent,
+	setUserInfo,
+}: {
+	setComponent: React.Dispatch<React.SetStateAction<string | null>>;
+	setUserInfo: React.Dispatch<React.SetStateAction<UserInfo | null>>;
+}) => {
 	const [input, setInput] = useState("");
 
 	const formatInput = (input: string) => {
@@ -64,7 +71,22 @@ const TelephoneComponent = () => {
 				);
 
 				if (response.status == 200 && response.data) {
-					console.log(response.data);
+					const [birthday_month, birthday_day] = response.data.birthday
+						.split("/")
+						.map(Number);
+
+					const userInfo: UserInfo = {
+						id: response.data.id,
+						phoneNumber: phoneNumber,
+						fullName: response.data.fullName,
+						userId: response.data.userId,
+						email: response.data.email,
+						birthday_month: birthday_month,
+						birthday_day: birthday_day,
+					};
+
+					setUserInfo(userInfo);
+					setComponent("info");
 				}
 			}
 		}
