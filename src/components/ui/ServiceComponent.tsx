@@ -7,9 +7,11 @@ import axios from "axios";
 const ServiceComponent = ({
 	setComponent,
 	setServiceList,
+	setServiceIdList,
 }: {
 	setComponent: React.Dispatch<React.SetStateAction<string>>;
 	setServiceList: React.Dispatch<React.SetStateAction<string>>;
+	setServiceIdList: React.Dispatch<React.SetStateAction<Set<number>>>;
 }) => {
 	const [cards, setCards] = useState<Service[]>([]);
 
@@ -96,14 +98,17 @@ const ServiceComponent = ({
 					className="mx-5 px-5 py-3"
 					onClick={() => {
 						let serviceListStr: string = "";
+						const serviceListId: Set<number> = new Set<number>();
 
 						cards.map((card) => {
 							if (serviceList.has(card.id)) {
 								serviceListStr += card.name + ", ";
+								serviceListId.add(card.id);
 							}
 						});
 
 						setServiceList(serviceListStr.trim().slice(0, -1));
+						setServiceIdList(serviceListId);
 						setComponent("review");
 					}}
 				>

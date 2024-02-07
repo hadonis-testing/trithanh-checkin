@@ -1,15 +1,20 @@
 import { Button, Container, Form } from "react-bootstrap";
 import UserInfo from "../data/UserInfo";
+import axios from "axios";
 
 const ReviewComponent = ({
 	setComponent,
+	setRewardPoints,
 	userInfo,
 	serviceList,
+	serviceIdList,
 	token,
 }: {
 	setComponent: React.Dispatch<React.SetStateAction<string>>;
+	setRewardPoints: React.Dispatch<React.SetStateAction<number>>;
 	userInfo: UserInfo;
 	serviceList: string;
+	serviceIdList: Set<number>;
 	token: string;
 }) => {
 	const formatPhoneNumber = (phoneNumber: string) => {
@@ -26,19 +31,45 @@ const ReviewComponent = ({
 			.padStart(2, "0")}`;
 	};
 
+	const handleClickNext = async () => {
+		const data = {
+			phoneNumber: userInfo.phoneNumber,
+			fullName: userInfo.fullName,
+			email: userInfo.email,
+			serviceIds: [...serviceIdList],
+			vendorId: "2",
+			shophouseId: "7",
+		};
+
+		const response = await axios.post(
+			"https://checkin.trithanhsoft.com/mobile-sign-in",
+			{
+				...data,
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			}
+		);
+
+		setRewardPoints(Number(response.data.rewardPoints));
+		setComponent("result");
+	};
+
 	return (
 		<Container fluid className="mt-5">
 			<Form>
 				<Form.Group className="mb-3" controlId="formName">
 					<Form.Label>Your name</Form.Label>
-					<Form.Control type="name" value={userInfo.fullName} />
+					<Form.Control type="name" defaultValue={userInfo.fullName} />
 				</Form.Group>
 
 				<Form.Group className="mb-3" controlId="formName">
 					<Form.Label>Phone</Form.Label>
 					<Form.Control
 						type="phone"
-						value={formatPhoneNumber(userInfo.phoneNumber)}
+						defaultValue={formatPhoneNumber(userInfo.phoneNumber)}
 					/>
 				</Form.Group>
 
@@ -46,7 +77,7 @@ const ReviewComponent = ({
 					<Form.Label>Birthday</Form.Label>
 					<Form.Control
 						type="birthday"
-						value={formatBirthday(
+						defaultValue={formatBirthday(
 							userInfo.birthday_month,
 							userInfo.birthday_day
 						)}
@@ -55,12 +86,12 @@ const ReviewComponent = ({
 
 				<Form.Group className="mb-3" controlId="formName">
 					<Form.Label>E-mail</Form.Label>
-					<Form.Control type="email" value={userInfo.email} />
+					<Form.Control type="email" defaultValue={userInfo.email} />
 				</Form.Group>
 
 				<Form.Group className="mb-3" controlId="formName">
 					<Form.Label>Service</Form.Label>
-					<Form.Control type="service" value={serviceList} />
+					<Form.Control type="service" defaultValue={serviceList} />
 				</Form.Group>
 
 				<br />
@@ -80,8 +111,12 @@ const ReviewComponent = ({
 					>
 						Back
 					</Button>
-					<Button variant="primary" className="mx-5 px-5 py-3">
-						Next {token}
+					<Button
+						variant="primary"
+						className="mx-5 px-5 py-3"
+						onClick={handleClickNext}
+					>
+						Finish
 					</Button>
 				</div>
 			</Form>

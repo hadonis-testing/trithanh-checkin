@@ -13,6 +13,7 @@ const ServiceComponent = lazy(
 	() => import("../components/ui/ServiceComponent")
 );
 const ReviewComponent = lazy(() => import("../components/ui/ReviewComponent"));
+const ResultComponent = lazy(() => import("../components/ui/ResultComponent"));
 
 const CheckInScreen = ({ token }: { token: string }) => {
 	useEffect(() => {
@@ -30,6 +31,8 @@ const CheckInScreen = ({ token }: { token: string }) => {
 		birthday_day: 0,
 	});
 	const [serviceList, setServiceList] = useState("");
+	const [serviceIdList, setServiceIdList] = useState(new Set<number>());
+	const [rewardPoints, setRewardPoints] = useState(0);
 
 	return (
 		<Container fluid>
@@ -61,14 +64,23 @@ const CheckInScreen = ({ token }: { token: string }) => {
 							<ServiceComponent
 								setComponent={setComponent}
 								setServiceList={setServiceList}
+								setServiceIdList={setServiceIdList}
 							/>
 						)}
 						{component == "review" && (
 							<ReviewComponent
 								setComponent={setComponent}
+								setRewardPoints={setRewardPoints}
 								userInfo={userInfo}
 								serviceList={serviceList}
+								serviceIdList={serviceIdList}
 								token={token}
+							/>
+						)}
+						{component == "result" && (
+							<ResultComponent
+								setComponent={setComponent}
+								rewardPoints={rewardPoints}
 							/>
 						)}
 					</Suspense>

@@ -46,12 +46,11 @@ const InfoComponent = ({
 					<Form.Label>Birthday</Form.Label>
 					<Row>
 						<Col sm={6}>
-							<Form.Select aria-label="MM">
+							<Form.Select aria-label="MM" defaultValue={month}>
 								{months.map((_month) => (
 									<option
 										key={_month}
 										value={_month}
-										selected={month == _month}
 									>
 										{_month}
 									</option>
@@ -59,9 +58,9 @@ const InfoComponent = ({
 							</Form.Select>
 						</Col>
 						<Col sm={6}>
-							<Form.Select aria-label="DD">
+							<Form.Select aria-label="DD" defaultValue={day}>
 								{days.map((_day) => (
-									<option key={_day} value={_day} selected={day == _day}>
+									<option key={_day} value={_day}>
 										{_day}
 									</option>
 								))}

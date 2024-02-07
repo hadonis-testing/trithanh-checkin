@@ -62,7 +62,6 @@ const TelephoneComponent = ({
 			const phoneNumber = removeFormatting(input + value);
 
 			if (phoneNumber.length == 10) {
-				console.log("Telephone number is complete");
 				setInput("");
 
 				const response = await axios.get(
@@ -71,9 +70,13 @@ const TelephoneComponent = ({
 				);
 
 				if (response.status == 200 && response.data) {
-					const [birthday_month, birthday_day] = response.data.birthday
-						.split("/")
-						.map(Number);
+					let [birthday_month, birthday_day] = [1, 1];
+
+					if (response.data.birthday) {
+						[birthday_month, birthday_day] = response.data.birthday
+							.split("/")
+							.map(Number);
+					}
 
 					const userInfo: UserInfo = {
 						id: response.data.id,
